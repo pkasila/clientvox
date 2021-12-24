@@ -12,7 +12,7 @@ pub async fn main() -> Result<(), Box<dyn Error>> {
 
     let process = match Command::new("/bin/sh")
         .arg("-c")
-        .arg(format!("ffmpeg -i {} -s {}x{} -r 7 -t 1 -pix_fmt bgra -f rawvideo pipe:",
+        .arg(format!("ffmpeg -i {} -s {}x{} -r 7 -t 1 -pix_fmt rgb565le -f rawvideo pipe:",
                      std::env::args().nth(2).unwrap(),
                      client.device_info.frame_size[0], client.device_info.frame_size[1]))
         .stdin(Stdio::piped())
