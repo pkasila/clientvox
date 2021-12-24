@@ -8,12 +8,12 @@ use corevox::network::messages::VoxPack;
 pub async fn main() -> Result<(), Box<dyn Error>> {
     println!("Starting");
 
-    let mut client = VoxClientImpl::new("0.0.0.0:1990".to_string()).await.unwrap();
+    let mut client = VoxClientImpl::new(std::env::args().nth(1).unwrap().to_string()).await.unwrap();
 
     let process = match Command::new("/bin/sh")
         .arg("-c")
         .arg(format!("ffmpeg -i {} -s {}x{} -r 7 -t 1 -pix_fmt rgb565le -f rawvideo pipe:",
-                     std::env::args().nth(1).unwrap(),
+                     std::env::args().nth(2).unwrap(),
                      client.device_info.frame_size[0], client.device_info.frame_size[1]))
         .stdin(Stdio::piped())
         .stdout(Stdio::piped())
